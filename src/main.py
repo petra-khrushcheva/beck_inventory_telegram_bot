@@ -2,8 +2,7 @@ import asyncio
 import logging
 import sys
 
-from bot.dispatcher import dp
-from bot.main import bot, storage
+from bot.main import bot, storage, dp
 
 
 async def main() -> None:

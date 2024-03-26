@@ -6,10 +6,10 @@ from bot.filters.callback_data import SurveyAnswerData
 
 async def get_keyboard(question: dict):
     builder = InlineKeyboardBuilder()
-    for key, value in question.items():
+    for score, answer in question.items():
         builder.add(
             InlineKeyboardButton(
-                text=value, callback_data=SurveyAnswerData(value=key)
+                text=answer, callback_data=SurveyAnswerData(value=score)
             )
         )
     builder.adjust(1)
