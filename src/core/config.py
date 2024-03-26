@@ -1,6 +1,7 @@
 import os
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic import SecretStr
 
 
 class Settings(BaseSettings):
@@ -11,11 +12,7 @@ class Settings(BaseSettings):
     db_username: str
     db_echo: bool
 
-    secret_key: str
-
-    project_name: str
-    project_version: str
-    jwt_lifetime_seconds: int
+    bot_token: SecretStr
 
     model_config = SettingsConfigDict(
         env_file=f"{os.path.dirname(os.path.abspath(__file__))}/../../.env",
