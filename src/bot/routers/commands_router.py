@@ -2,28 +2,16 @@ from aiogram import Router
 from aiogram.filters import Command, CommandStart
 from aiogram.types import Message
 from aiogram.fsm.context import FSMContext
-from aiogram.utils.markdown import hbold
 
 from bot.keyboards import get_start_keyboard
+from bot.texts import BotText
 
 
 router = Router()
 
-START_TEXT = (
-    "Вам будет предложен ряд утверждений.\n\nВыберите одно "
-    "утверждение в каждой группе, которое лучше всего описывает "
-    "ваше состояние "
-    f"{hbold('за прошедшую неделю, включая сегодняшний день')}.\n\n"
-    "Прежде чем сделать свой выбор, внимательно прочтите все "
-    "утверждения в каждой группе."
-)
 
-HELP_TEXT = (
-    "Здесь вы можете пройти тест Бека для определения депрессии.\n\n"
-    "Пожалуйста, обратите внимание на то что онлайн-тест не может "
-    "быть использован для самостоятельной постановки диагноза.\n\n"
-    "В случае любых сомнений обращайтесь к квалифицированным специалистам."
-)
+async def command_answer(message: Message, text: str):
+    await message.answer(text=text, reply_markup=await get_start_keyboard())
 
 
 @router.message(CommandStart())
@@ -33,9 +21,7 @@ async def command_start_handler(message: Message, state: FSMContext):
     """
     if await state.get_state() is not None:
         await state.clear()
-    await message.answer(
-        text=START_TEXT, reply_markup=await get_start_keyboard()
-    )
+    await command_answer(message=message, text=BotText.START_TEXT)
 
 
 @router.message(Command("help"))
@@ -43,6 +29,14 @@ async def command_help_handler(message: Message) -> None:
     """
     This handler receives messages with "/help" command
     """
-    await message.answer(
-        text=HELP_TEXT, reply_markup=await get_start_keyboard()
-    )
+    await command_answer(message=message, text=BotText.HELP_TEXT)
+
+
+@router.message(Command("cancel"))
+async def command_cancel_test(message: Message, state: FSMContext) -> None:
+    """
+    This handler receives messages with "/cancel" command
+    """
+    if await state.get_state() is not None:
+        await state.clear()
+    await command_answer(message=message, text=BotText.CANCEL_TEXT)

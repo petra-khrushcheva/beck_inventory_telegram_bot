@@ -6,17 +6,12 @@ from aiogram.filters import Command, StateFilter
 from aiogram.fsm.state import State
 
 from bot.filters.callback_data import SurveyAnswerData
-from bot.filters.states import SurveyState
 from bot.keyboards import get_survey_keyboard
 from bot.utils import get_test_result
+from bot.texts import BotText
 
 
 router = Router()
-
-
-QUESTION_TEXT = (
-    "Что лучше описывает ваше состояние за прошедшую неделю и сегодня?"
-)
 
 
 with open(
@@ -33,14 +28,14 @@ for i in range(len(questions)):
 async def new_test_handler(query: Message | CallbackQuery, state: FSMContext):
     """
     This handler receives "new_test" command or callback
-    and answers with first question of the test
+    and replies with first question of the test
     """
     chat_id = (
         query.chat.id if isinstance(query, Message) else query.message.chat.id
     )
     await query.bot.send_message(
         chat_id=chat_id,
-        text=QUESTION_TEXT,
+        text=BotText.QUESTION_TEXT,
         reply_markup=await get_survey_keyboard(question=questions[0]),
     )
     await state.set_data({})
@@ -74,7 +69,7 @@ async def survey_answer_handler(
     question_number = int((await state.get_state()).replace("question", ""))
     await state.update_data(score=callback_data.value)
     await callback.message.edit_reply_markup(
-        text=QUESTION_TEXT,
+        text=BotText.QUESTION_TEXT,
         reply_markup=get_survey_keyboard(question=questions[question_number]),
     )
     await state.set_state(State(state=f"question{question_number+1}"))
