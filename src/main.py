@@ -2,11 +2,12 @@ import asyncio
 import logging
 import sys
 
-from bot.main import bot, storage, dp
+from bot.main import bot  # , dp
+from temp_dispatcher import dp
 
 
 async def main() -> None:
-    await dp.start_polling(bot=bot, storage=storage)
+    await dp.start_polling(bot)
 
 
 if __name__ == "__main__":
