@@ -1,4 +1,4 @@
-async def get_test_result(score) -> str:
+def get_test_result(score) -> str:
     if 0 <= score <= 9:
         return f"{score} баллов. Отсутствие депрессивных симптомов."
     elif 10 <= score <= 18:
