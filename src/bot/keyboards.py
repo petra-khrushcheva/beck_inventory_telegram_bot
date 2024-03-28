@@ -1,22 +1,22 @@
-from aiogram.utils.keyboard import InlineKeyboardBuilder
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+from aiogram.utils.keyboard import InlineKeyboardBuilder
 
 from bot.filters.callback_data import SurveyAnswerData
 
 
-async def get_survey_keyboard(question: dict):
+def get_survey_keyboard(question: dict):
     builder = InlineKeyboardBuilder()
     for score, answer in question.items():
         builder.add(
             InlineKeyboardButton(
-                text=answer, callback_data=SurveyAnswerData(value=score)
+                text=answer, callback_data=SurveyAnswerData(score=score).pack()
             )
         )
     builder.adjust(1)
     return builder.as_markup()
 
 
-async def get_start_keyboard():
+def get_start_keyboard():
     keyboard = InlineKeyboardMarkup(
         inline_keyboard=[
             [
