@@ -1,13 +1,14 @@
 from aiogram import Router
 from aiogram.types import Message
 
+from texts import BotText
 
 router = Router()
 
 
 @router.message()
-async def any_message_handler(message: Message) -> None:
+async def unidentified_message_handler(message: Message) -> None:
     """
-    This handler receives any other messages
+    This handler receives any unspecified messages
     """
-    pass
+    await message.answer(text=BotText.UNIDENTIFIED_MESSAGE_TEXT)
