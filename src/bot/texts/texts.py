@@ -1,4 +1,4 @@
-from aiogram.utils.markdown import hbold
+from aiogram.utils.markdown import hbold, hlink
 
 
 class BotText:
@@ -31,4 +31,12 @@ class BotText:
     UNIDENTIFIED_MESSAGE_TEXT = (
         "К сожалению, я не умею читать сообщения, отправленные с клавиатуры."
         "\n\nВозможно, вам нужна помощь? /help"
+    )
+
+    RESULT_TEXT = (
+        "Пожалуйста, обратите внимание на то что онлайн-тест не может быть "
+        "использован для самостоятельной постановки диагноза.\n\nВ случае "
+        "любых сомнений обращайтесь к "  # хехе, нативочка
+        F"{hlink('квалифицированным специалистам', 'example.com')}.\n\n"
+        "Результат: "
     )
