@@ -4,7 +4,7 @@ from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
 
 from bot.keyboards import get_start_keyboard
-from bot.texts import BotText
+from bot.texts.texts import BotText
 
 router = Router()
 
