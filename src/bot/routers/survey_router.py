@@ -1,26 +1,26 @@
 import json
+import pathlib
+
 from aiogram import F, Router
-from aiogram.types import CallbackQuery, Message
+from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
-from aiogram.filters import Command, StateFilter
 from aiogram.fsm.state import State
+from aiogram.types import CallbackQuery, Message
 
 from bot.filters.callback_data import SurveyAnswerData
 from bot.keyboards import get_survey_keyboard
+from bot.texts.texts import BotText
 from bot.utils import get_test_result
-from bot.texts import BotText
-
 
 router = Router()
 
-
 with open(
-    "src/bot/survey_questions.json"
-) as file:  # сюда добавить асинхронность
+    f"{pathlib.Path(__file__).parents[1]}/texts/survey_questions.json"
+) as file:
     questions = json.load(file)
 
-for i in range(len(questions)):
-    pass
+
+number_of_questions = len(questions)
 
 
 @router.callback_query(F.data == "new_test")
@@ -28,7 +28,7 @@ for i in range(len(questions)):
 async def new_test_handler(query: Message | CallbackQuery, state: FSMContext):
     """
     This handler receives "new_test" command or callback
-    and replies with first question of the test
+    and replies with first question of the test.
     """
     chat_id = (
         query.chat.id if isinstance(query, Message) else query.message.chat.id
@@ -36,44 +36,50 @@ async def new_test_handler(query: Message | CallbackQuery, state: FSMContext):
     await query.bot.send_message(
         chat_id=chat_id,
         text=BotText.QUESTION_TEXT,
-        reply_markup=await get_survey_keyboard(question=questions[0]),
+        reply_markup=get_survey_keyboard(question=questions[0]),
     )
     await state.set_data({})
     await state.set_state(State(state="question1"))
 
 
-# last callback answer
-@router.callback_query(SurveyState.question21, SurveyAnswerData.filter())
+@router.callback_query(
+    State(state=f"question{number_of_questions}"),
+    SurveyAnswerData.filter(),
+)
 async def last_answer_handler(
     callback: CallbackQuery, callback_data: SurveyAnswerData, state: FSMContext
 ):
+    """
+    This handler receives the last test answer
+    and replies with the test result.
+    """
     await state.update_data(
-        score=int(callback_data.value)
-    )  # прибавить значение дата к итоговому результату???????
-    user_data = state.get_data()
-    await callback.message.answer(
-        text=get_test_result(
-            score=f"что-то полученное из юзер даты{user_data}"
-        )
+        data={f"answer{number_of_questions}": callback_data.score}
+    )
+    user_data: dict = await state.get_data()
+    score = sum([value for value in user_data.values()])
+    await callback.message.edit_text(
+        text=BotText.RESULT_TEXT + get_test_result(score=score)
     )
     await state.clear()
 
 
 @router.callback_query(
-    StateFilter(State(state="question1")),
-    SurveyAnswerData.filter(),  # написать фильр для стейт
+    State(F.state.startswith("question")),
+    SurveyAnswerData.filter(),
 )
 async def survey_answer_handler(
     callback: CallbackQuery, callback_data: SurveyAnswerData, state: FSMContext
 ):
-    question_number = int((await state.get_state()).replace("question", ""))
-    await state.update_data(score=callback_data.value)
+    """
+    This handler recieves all test answers except for the last one
+    and replies with the next question.
+    """
+    question_number = int((await state.get_state()).replace("@:question", ""))
+    await state.update_data(
+        data={f"answer{question_number}": callback_data.score}
+    )
     await callback.message.edit_reply_markup(
-        text=BotText.QUESTION_TEXT,
         reply_markup=get_survey_keyboard(question=questions[question_number]),
     )
     await state.set_state(State(state=f"question{question_number+1}"))
-
-
-# и так 20-21 раз
-...
