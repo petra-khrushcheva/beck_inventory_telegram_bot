@@ -1,14 +1,13 @@
 import pathlib
 
-from pydantic_settings import BaseSettings, SettingsConfigDict
 from pydantic import SecretStr
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    # db_hostname: str
-    # db_port: str
-    # db_name: str
-    # db_password: str
+    redis_host: str
+    redis_port: int
+    redis_db: int
 
     bot_token: SecretStr
 

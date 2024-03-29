@@ -2,18 +2,14 @@ version: "3.8"
 
 services:
 
-  db:
-    container_name: db
-    image: postgres
+  redis:
+    container_name: redis
     restart: always
+    image: redis:7.2
     ports:
-      - 5433:5432
-    environment:
-      - POSTGRES_USER=${DB_USERNAME}
-      - POSTGRES_PASSWORD=${DB_PASSWORD}
-      - POSTGRES_DB=${DB_NAME}
+      - 6379:6379
     # volumes:
-    #   - pgdata:/var/lib/postgresql/data
+    #   - pgdata:/var/lib/postgresql/data  ??? как правильно обозвать эту волюмэ????
 
 
   web:
