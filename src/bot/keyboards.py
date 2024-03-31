@@ -17,7 +17,7 @@ def get_survey_keyboard(question: dict):
 
 
 def get_start_keyboard():
-    keyboard = InlineKeyboardMarkup(
+    return InlineKeyboardMarkup(
         inline_keyboard=[
             [
                 InlineKeyboardButton(
@@ -26,4 +26,3 @@ def get_start_keyboard():
             ]
         ]
     )
-    return keyboard
