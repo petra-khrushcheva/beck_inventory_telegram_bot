@@ -1,4 +1,4 @@
-<!-- ![Workflow badge](https://github.com/petra-khrushcheva/the_race_f1_telegram_bot/actions/workflows/main.yml/badge.svg) -->
+![Workflow badge](https://github.com/petra-khrushcheva/beck_inventory_telegram_bot/actions/workflows/main.yml/badge.svg)
 
 # Телеграм бот Тест Бека 📝
 
