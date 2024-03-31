@@ -26,4 +26,4 @@ cd beck_inventory_telegram_bot
 ```
 docker compose -f docker-compose-dev.yml up
 ``` 
-Готово! 📝
+Готово! 📝 
