@@ -2,7 +2,7 @@ import asyncio
 import logging
 import sys
 
-from bot.main import bot, dp
+from bot import bot, dp
 
 
 async def main() -> None:
