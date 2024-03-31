@@ -1,7 +1,6 @@
 from aiogram import Bot, Dispatcher
 from aiogram.enums import ParseMode
-from aiogram.fsm.storage.redis import RedisStorage
-from redis import Redis
+from aiogram.fsm.storage.redis import Redis, RedisStorage
 
 from bot.routers import router
 from core.config import settings
