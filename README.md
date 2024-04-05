@@ -21,7 +21,7 @@ git clone git@github.com:petra-khrushcheva/beck_inventory_telegram_bot.git
 ```
 cd beck_inventory_telegram_bot
 ``` 
-- Cоздайте .env файл по [образцу](https://github.com/petra-khrushcheva/beck_inventory_telegram_bot/blob/main/.env.example).
+- Cоздайте переменные окружения по [образцу](https://github.com/petra-khrushcheva/beck_inventory_telegram_bot/blob/main/.env.example).
 - Запустите Docker-compose:
 ```
 docker compose -f docker-compose-dev.yml up
