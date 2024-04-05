@@ -5,6 +5,9 @@ from bot.filters import SurveyAnswerData
 
 
 def get_survey_keyboard(question: dict):
+    """
+    Клавиатура с вопросами теста.
+    """
     builder = InlineKeyboardBuilder()
     for score, answer in question.items():
         builder.add(
@@ -17,6 +20,7 @@ def get_survey_keyboard(question: dict):
 
 
 def get_start_keyboard():
+    """Клавиатура с кнопкой 'Начать тест'."""
     return InlineKeyboardMarkup(
         inline_keyboard=[
             [

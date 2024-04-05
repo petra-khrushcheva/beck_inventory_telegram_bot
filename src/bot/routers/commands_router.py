@@ -10,6 +10,10 @@ router = Router()
 
 
 async def command_answer(message: Message, text: str):
+    """
+    Функция отправки сообщения с кнопкой начала теста.
+    Текст сообщения варьируется, кнопка нет.
+    """
     await message.answer(text=text, reply_markup=get_start_keyboard())
 
 
