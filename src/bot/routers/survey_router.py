@@ -7,9 +7,9 @@ from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import State
 from aiogram.types import CallbackQuery, Message
 
-from bot.filters.callback_data import SurveyAnswerData
+from bot.filters import SurveyAnswerData
 from bot.keyboards import get_survey_keyboard
-from bot.texts.texts import BotText
+from bot.texts import BotText
 from bot.utils import get_test_result
 
 router = Router()

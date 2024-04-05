@@ -3,7 +3,7 @@ from aiogram.enums import ParseMode
 from aiogram.fsm.storage.redis import Redis, RedisStorage
 
 from bot.routers import router
-from core.config import settings
+from core import settings
 
 bot = Bot(
     token=settings.bot_token.get_secret_value(), parse_mode=ParseMode.HTML

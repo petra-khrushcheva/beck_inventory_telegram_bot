@@ -1,7 +1,7 @@
 from aiogram import Router
 from aiogram.types import Message
 
-from bot.texts.texts import BotText
+from bot.texts import BotText
 
 router = Router()
 

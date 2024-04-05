@@ -1,7 +1,7 @@
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
-from bot.filters.callback_data import SurveyAnswerData
+from bot.filters import SurveyAnswerData
 
 
 def get_survey_keyboard(question: dict):
