@@ -7,7 +7,7 @@
 ***
 ### Технологии
 Aiogram 3.4  
-Redis
+Redis  
 Pydantic 2.5    
 Pydantic settings 2.2
 ***
